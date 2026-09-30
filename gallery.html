@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - The Blind Source</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- External CSS Link -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <a href="./index.html" class="logo-area">
+            <img src="logo.png" alt="The Blind Source" class="site-logo">
+        </a>
+        <nav>
+            <ul>
+               <li><a href="./index.html">Home</a></li>
+                    <li><a href="./product.html">Products</a></li>
+                    <li><a href="./about.html">About Us</a></li>
+                    <li><a href="./gallery.html" class="active">Gallery</a></li>
+                    <li><a href="./contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="nav-right">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <a href="quote.html" class="btn-gold">Get a Free Quote <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <span style="font-size: 13px; letter-spacing: 2px; color: #c5a880; text-transform: uppercase;">— OUR GALLERY —</span>
+            <h1 style="font-size: 46px; margin: 10px 0 15px 0;">Design Inspiration <br>for <span style="color: #c5a880;">Every Window.</span></h1>
+            <p>Explore our collection of beautiful spaces featuring our premium window coverings.</p>
+        </div>
+    </section>
+
+    <!-- Gallery Badges Bar -->
+    <div class="quote-badges-bar">
+        <div class="qb-item">
+            <i class="fa-solid fa-award"></i>
+            <div><strong>Premium</strong><br>Finishes</div>
+        </div>
+        <div class="qb-item">
+            <i class="fa-solid fa-house-chimney"></i>
+            <div><strong>Stylish</strong><br>Spaces</div>
+        </div>
+        <div class="qb-item">
+            <i class="fa-solid fa-sliders"></i>
+            <div><strong>Perfect</strong><br>Installation</div>
+        </div>
+        <div class="qb-item">
+            <i class="fa-solid fa-sun"></i>
+            <div><strong>Timeless</strong><br>Elegance</div>
+        </div>
+    </div>
+
+    <!-- Gallery Filter Bar & Grid Section -->
+    <section class="gallery-section" style="padding: 50px 5%;">
+        
+        <!-- Filter Categories & Dropdown -->
+        <div class="gallery-filter-bar">
+            <div class="filter-chips">
+                <button class="chip active">All Images</button>
+                <button class="chip">Living Room</button>
+                <button class="chip">Bedroom</button>
+                <button class="chip">Kitchen</button>
+                <button class="chip">Office</button>
+                <button class="chip">Outdoor</button>
+                <button class="chip">Commercial</button>
+            </div>
+            <div class="filter-dropdown-area">
+                <select class="sort-select">
+                    <option>All Products</option>
+                    <option>Roller Blinds</option>
+                    <option>Zebra Blinds</option>
+                    <option>Roman Blinds</option>
+                    <option>Wooden Blinds</option>
+                    <option>Bamboo Blinds</option>
+                    <option>Blackout Blinds</option>
+                    <option>Sheer Curtains</option>
+                </select>
+                <button class="btn-filter-icon"><i class="fa-solid fa-sliders"></i> Filter</button>
+            </div>
+        </div>
+
+        <!-- Gallery Grid (3x3 items) -->
+        <div class="blog-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-top: 30px;">
+            
+            <!-- Item 1 -->
+            <div class="blog-card" style="position: relative;">
+                <div class="blog-img" style="height: 260px; position: relative;">
+                    <img src="https://images.unsplash.com/photo-1540518614846-7ede433c4ef0?q=80&w=600&auto=format&fit=crop" alt="Luxury Living Room">
+                    <div style="position: absolute; bottom: 15px; left: 15px; color: #fff; z-index: 2;">
+                        <h3 style="font-size: 16px; font-family: 'Playfair Display', serif; margin-bottom: 2px;">Luxury Living Room – Gurgaon</h3>
+                        <p style="font-size: 12px; color: #cbd5e1;">Roller Blinds</p>
+                    </div>
+                    <div style="position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.5); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; cursor: pointer;">
+                        <i class="fa-solid fa-magnifying-glass" style="font-size: 12px;"></i>
+                    </div>
+                    <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent 60%);"></div>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="blog-card" style="position: relative;">
+                <div class="blog-img" style="height: 260px; position: relative;">
+                    <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=600&auto=format&fit=crop" alt="Modern Living Room">
+                    <div style="position: absolute; bottom: 15px; left: 15px; color: #fff; z-index: 2;">
+                        <h3 style="font-size: 16px; font-family: 'Playfair Display', serif; margin-bottom: 2px;">Modern Living Room – Noida</h3>
+                        <p style="font-size: 12px; color: #cbd5e1;">Zebra Blinds</p>
+                    </div>
+                    <div style="position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.5); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; cursor: pointer;">
+                        <i class="fa-solid fa-magnifying-glass" style="font-size: 12px;"></i>
+                    </div>
+                    <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent 60%);"></div>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="blog-card" style="position: relative;">
+                <div class="blog-img" style="height: 260px; position: relative;">
+                    <img src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?q=80&w=600&auto=format&fit=crop" alt="Elegant Bedroom">
+                    <div style="position: absolute; bottom: 15px; left: 15px; color: #fff; z-index: 2;">
+                        <h3 style="font-size: 16px; font-family: 'Playfair Display', serif; margin-bottom: 2px;">Elegant Bedroom – Delhi</h3>
+                        <p style="font-size: 12px; color: #cbd5e1;">Roman Blinds</p>
+                    </div>
+                    <div style="position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.5); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; cursor: pointer;">
+                        <i class="fa-solid fa-magnifying-glass" style="font-size: 12px;"></i>
+                    </div>
+                    <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent 60%);"></div>
+                </div>
+            </div>
+
+            <!-- Item 4 -->
+            <div class="blog-card" style="position: relative;">
+                <div class="blog-img" style="height: 260px; position: relative;">
+                    <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=600&auto=format&fit=crop" alt="Private Villa">
+                    <div style="position: absolute; bottom: 15px; left: 15px; color: #fff; z-index: 2;">
+                        <h3 style="font-size: 16px; font-family: 'Playfair Display', serif; margin-bottom: 2px;">Private Villa – Jaipur</h3>
+                        <p style="font-size: 12px; color: #cbd5e1;">Wooden Blinds</p>
+                    </div>
+                    <div style="position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.5); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; cursor: pointer;">
+                        <i class="fa-solid fa-magnifying-glass" style="font-size: 12px;"></i>
+                    </div>
+                    <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent 60%);"></div>
+                </div>
+            </div>
+
+            <!-- Item 5 -->
+            <div class="blog-card" style="position: relative;">
+                <div class="blog-img" style="height: 260px; position: relative;">
+                    <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=600&auto=format&fit=crop" alt="Outdoor Lounge">
+                    <div style="position: absolute; bottom: 15px; left: 15px; color: #fff; z-index: 2;">
+                        <h3 style="font-size: 16px; font-family: 'Playfair Display', serif; margin-bottom: 2px;">Outdoor Lounge – Goa</h3>
+                        <p style="font-size: 12px; color: #cbd5e1;">Outdoor Blinds</p>
+                    </div>
+                    <div style="position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.5); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; cursor: pointer;">
+                        <i class="fa-solid fa-magnifying-glass" style="font-size: 12px;"></i>
+                    </div>
+                    <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent 60%);"></div>
+                </div>
+            </div>
+
+            <!-- Item 6 -->
+            <div class="blog-card" style="position: relative;">
+                <div class="blog-img" style="height: 260px; position: relative;">
+                    <img src="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=600&auto=format&fit=crop" alt="Corporate Office">
+                    <div style="position: absolute; bottom: 15px; left: 15px; color: #fff; z-index: 2;">
+                        <h3 style="font-size: 16px; font-family: 'Playfair Display', serif; margin-bottom: 2px;">Corporate Office – Gurugram</h3>
+                        <p style="font-size: 12px; color: #cbd5e1;">Zebra Blinds</p>
+                    </div>
+                    <div style="position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.5); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; cursor: pointer;">
+                        <i class="fa-solid fa-magnifying-glass" style="font-size: 12px;"></i>
+                    </div>
+                    <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent 60%);"></div>
+                </div>
+            </div>
+
+            <!-- Item 7 -->
+            <div class="blog-card" style="position: relative;">
+                <div class="blog-img" style="height: 260px; position: relative;">
+                    <img src="https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=600&auto=format&fit=crop" alt="Dining Area">
+                    <div style="position: absolute; bottom: 15px; left: 15px; color: #fff; z-index: 2;">
+                        <h3 style="font-size: 16px; font-family: 'Playfair Display', serif; margin-bottom: 2px;">Dining Area – Pune</h3>
+                        <p style="font-size: 12px; color: #cbd5e1;">Bamboo Blinds</p>
+                    </div>
+                    <div style="position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.5); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; cursor: pointer;">
+                        <i class="fa-solid fa-magnifying-glass" style="font-size: 12px;"></i>
+                    </div>
+                    <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent 60%);"></div>
+                </div>
+            </div>
+
+            <!-- Item 8 -->
+            <div class="blog-card" style="position: relative;">
+                <div class="blog-img" style="height: 260px; position: relative;">
+                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600&auto=format&fit=crop" alt="Premium Bedroom">
+                    <div style="position: absolute; bottom: 15px; left: 15px; color: #fff; z-index: 2;">
+                        <h3 style="font-size: 16px; font-family: 'Playfair Display', serif; margin-bottom: 2px;">Premium Bedroom – Mumbai</h3>
+                        <p style="font-size: 12px; color: #cbd5e1;">Blackout Blinds</p>
+                    </div>
+                    <div style="position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.5); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; cursor: pointer;">
+                        <i class="fa-solid fa-magnifying-glass" style="font-size: 12px;"></i>
+                    </div>
+                    <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent 60%);"></div>
+                </div>
+            </div>
+
+            <!-- Item 9 -->
+            <div class="blog-card" style="position: relative;">
+                <div class="blog-img" style="height: 260px; position: relative;">
+                    <img src="https://images.unsplash.com/photo-1502005229762-cf1b4da7c5d6?q=80&w=600&auto=format&fit=crop" alt="Luxury Apartment">
+                    <div style="position: absolute; bottom: 15px; left: 15px; color: #fff; z-index: 2;">
+                        <h3 style="font-size: 16px; font-family: 'Playfair Display', serif; margin-bottom: 2px;">Luxury Apartment – Delhi</h3>
+                        <p style="font-size: 12px; color: #cbd5e1;">Sheer Curtains</p>
+                    </div>
+                    <div style="position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.5); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; cursor: pointer;">
+                        <i class="fa-solid fa-magnifying-glass" style="font-size: 12px;"></i>
+                    </div>
+                    <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent 60%);"></div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Consultation Banner -->
+    <section class="consultation-banner">
+        <div class="cb-left">
+            <div class="cb-icon"><i class="fa-solid fa-calendar-days"></i></div>
+            <div>
+                <h2>Have a Project in Mind?</h2>
+                <p>Let us help you find the perfect window covering solution for your space.</p>
+            </div>
+        </div>
+        <div class="cb-right">
+            <a href="quote.html" class="btn-gold">Get a Free Quote <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="https://wa.me/919876543210" target="_blank" rel="noopener" class="btn-outline-dark"><i class="fa-brands fa-whatsapp" style="color: #25D366; font-size: 16px;"></i> Talk on WhatsApp</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3 class="serif-font" style="margin-bottom: 15px;">THE BLIND SOURCE</h3>
+                <p style="color: #94a3b8; font-size: 14px; line-height: 1.5; margin-bottom: 20px;">Luxury window coverings, crafted to elevate every space.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-pinterest-p"></i></a>
+                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="./index.html">Home</a></li>
+                    <li><a href="./product.html">Products</a></li>
+                    <li><a href="./about.html">About Us</a></li>
+                    <li><a href="./gallery.html">Gallery</a></li>
+                    <li><a href="./blog.html">Blog</a></li>
+                    <li><a href="./contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Our Products</h4>
+                <ul>
+                    <li><a href="./product.html">Roller Blinds</a></li>
+                    <li><a href="./product.html">Zebra Blinds</a></li>
+                    <li><a href="./product.html">Roman Blinds</a></li>
+                    <li><a href="./product.html">Wooden Blinds</a></li>
+                    <li><a href="./product.html">Bamboo Blinds</a></li>
+                    <li><a href="./product.html">Blackout Blinds</a></li>
+                    <li><a href="./product.html">Motorized Blinds</a></li>
+                    <li><a href="./product.html">Curtains</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <p style="color: #94a3b8; font-size: 14px; margin-bottom: 10px;"><i class="fa-solid fa-location-dot"></i> Gurugram, Haryana, India</p>
+                <p style="color: #94a3b8; font-size: 14px; margin-bottom: 10px;"><i class="fa-solid fa-phone"></i> <a href="tel:+919876543210" style="color:inherit;text-decoration:none">+91 98765 43210</a></p>
+                <p style="color: #94a3b8; font-size: 14px;"><i class="fa-solid fa-envelope"></i> <a href="mailto:info@theblindsource.in" style="color:inherit;text-decoration:none">info@theblindsource.in</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 The Blind Source. All Rights Reserved.</p>
+            <p>Window Coverings, Perfected.</p>
+        </div>
+    </footer>
+
+    <!-- External JS Link -->
+    <script src="script.js"></script>
+</body>
+</html>
