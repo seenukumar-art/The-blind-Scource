@@ -171,16 +171,20 @@
         return input.checked;
       }).map(function (input) { return input.parentElement.textContent.trim().toLowerCase(); });
       var maxPrice = priceSlider ? Number(priceSlider.value) : Infinity;
+      var params = new URLSearchParams(window.location.search);
+      var searchTerm = (params.get("q") || params.get("type") || "").trim().toLowerCase();
       var visible = [];
 
       cards.forEach(function (card) {
         var name = getCardName(card);
+        var description = (card.querySelector("p") || {}).textContent || "";
         var price = knownPrices[name] || 0;
         var typesMatch = !selectedTypes.length || selectedTypes.some(function (type) {
           return name.indexOf(type.replace(/s$/, "")) !== -1;
         });
         var priceMatch = price <= maxPrice;
-        card.hidden = !(typesMatch && priceMatch);
+        var searchMatch = !searchTerm || name.indexOf(searchTerm) !== -1 || description.toLowerCase().indexOf(searchTerm) !== -1;
+        card.hidden = !(typesMatch && priceMatch && searchMatch);
         if (!card.hidden) visible.push(card);
       });
 
@@ -193,7 +197,11 @@
       visible.forEach(function (card) { grid.appendChild(card); });
 
       var count = visible.length;
-      if (resultLabel) resultLabel.textContent = "Showing " + count + " of " + cards.length + " available product categories";
+      if (resultLabel) {
+        resultLabel.textContent = count
+          ? "Showing " + count + " of " + cards.length + " available product categories"
+          : "No product categories match your search and filters.";
+      }
       if (priceValue && priceSlider) priceValue.textContent = "Up to ₹" + Number(priceSlider.value).toLocaleString("en-IN");
     }
 
@@ -220,10 +228,217 @@
     applyFilters();
   }
 
+
+  function initHeaderSearch() {
+    var icon = document.querySelector("header .search-icon");
+    if (!icon) return;
+
+    var toggle = icon;
+    if (icon.tagName !== "BUTTON") {
+      toggle = document.createElement("button");
+      toggle.type = "button";
+      toggle.className = "search-icon search-toggle";
+      toggle.setAttribute("aria-label", "Open product search");
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.innerHTML = '<i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>';
+      icon.replaceWith(toggle);
+    }
+
+    var panel = document.querySelector(".site-search-panel");
+    if (!panel) {
+      panel = document.createElement("form");
+      panel.className = "site-search-panel";
+      panel.hidden = true;
+      panel.setAttribute("role", "search");
+      panel.innerHTML =
+        '<label class="site-search-label" for="site-search-input">Search products</label>' +
+        '<div class="site-search-row">' +
+          '<input id="site-search-input" name="q" type="search" placeholder="Try Roller Blinds or Zebra Blinds" required>' +
+          '<button type="submit">Search</button>' +
+        '</div>';
+      var header = document.querySelector("header");
+      if (header && header.parentNode) header.parentNode.insertBefore(panel, header.nextSibling);
+    }
+
+    toggle.addEventListener("click", function () {
+      panel.hidden = !panel.hidden;
+      toggle.setAttribute("aria-expanded", String(!panel.hidden));
+      if (!panel.hidden) {
+        var input = panel.querySelector("input");
+        if (input) input.focus();
+      }
+    });
+
+    panel.addEventListener("submit", function (event) {
+      event.preventDefault();
+      var input = panel.querySelector("input[name='q']");
+      var query = input ? input.value.trim() : "";
+      if (!query) {
+        if (input) input.focus();
+        return;
+      }
+      window.location.href = "./product.html?q=" + encodeURIComponent(query);
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && !panel.hidden) {
+        panel.hidden = true;
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.focus();
+      }
+    });
+  }
+
+  function initHomepageProductLinks() {
+    var sections = document.querySelectorAll(".section-padding.text-center");
+    var section = Array.prototype.find.call(sections, function (item) {
+      return item.querySelector(".products-grid .product-card");
+    });
+    if (!section) return;
+
+    section.querySelectorAll(".products-grid .product-card").forEach(function (card) {
+      var heading = card.querySelector("h3");
+      if (!heading || card.querySelector(".category-card-link")) return;
+      var productName = heading.textContent.trim();
+      var link = document.createElement("a");
+      link.className = "category-card-link";
+      link.href = "./product.html?type=" + encodeURIComponent(productName);
+      link.setAttribute("aria-label", "Explore " + productName);
+      link.textContent = "Explore " + productName;
+      card.appendChild(link);
+    });
+  }
+
+  function initGalleryLightbox() {
+    var gallery = document.querySelector(".gallery-section");
+    if (!gallery) return;
+
+    var dialog = document.querySelector(".gallery-lightbox");
+    if (!dialog) {
+      dialog = document.createElement("dialog");
+      dialog.className = "gallery-lightbox";
+      dialog.innerHTML =
+        '<button type="button" class="gallery-lightbox-close" aria-label="Close image preview">' +
+          '<i class="fa-solid fa-xmark" aria-hidden="true"></i>' +
+        '</button><img alt="">';
+      document.body.appendChild(dialog);
+    }
+
+    var preview = dialog.querySelector("img");
+    var close = dialog.querySelector(".gallery-lightbox-close");
+    close.addEventListener("click", function () { dialog.close(); });
+    dialog.addEventListener("click", function (event) {
+      if (event.target === dialog) dialog.close();
+    });
+
+    gallery.querySelectorAll(".blog-card").forEach(function (card) {
+      var image = card.querySelector(".blog-img img");
+      var zoom = card.querySelector(".fa-magnifying-glass");
+      var control = zoom ? zoom.parentElement : null;
+      if (!image || !control) return;
+
+      control.setAttribute("role", "button");
+      control.setAttribute("tabindex", "0");
+      control.setAttribute("aria-label", "View larger image: " + (image.alt || "Gallery image"));
+
+      function openPreview() {
+        preview.src = image.currentSrc || image.src;
+        preview.alt = image.alt || "Gallery image preview";
+        if (typeof dialog.showModal === "function") dialog.showModal();
+      }
+      control.addEventListener("click", openPreview);
+      control.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openPreview();
+        }
+      });
+    });
+  }
+
+  function initBlogInteractions() {
+    var grid = document.querySelector(".blog-grid");
+    if (!grid) return;
+    var cards = Array.prototype.slice.call(grid.querySelectorAll(".blog-card"));
+    var tags = document.querySelectorAll(".tags-cloud .tag");
+    var tagFilter = "";
+
+    function applyTagFilter() {
+      cards.forEach(function (card) {
+        var content = card.textContent.toLowerCase();
+        card.hidden = !!tagFilter && content.indexOf(tagFilter) === -1;
+      });
+    }
+
+    tags.forEach(function (tag) {
+      tag.addEventListener("click", function (event) {
+        event.preventDefault();
+        var selected = tag.textContent.trim().toLowerCase();
+        tagFilter = tagFilter === selected ? "" : selected;
+        tags.forEach(function (item) {
+          var active = item.textContent.trim().toLowerCase() === tagFilter;
+          item.classList.toggle("active", active);
+          item.setAttribute("aria-pressed", String(active));
+        });
+        applyTagFilter();
+      });
+    });
+
+    var sort = document.querySelector(".blog-header-bar .sort-select");
+    if (sort) {
+      sort.addEventListener("change", function () {
+        var value = sort.value.toLowerCase();
+        if (value.indexOf("latest") !== -1 || value.indexOf("oldest") !== -1) {
+          cards.sort(function (a, b) {
+            var aMeta = a.querySelector(".blog-meta");
+            var bMeta = b.querySelector(".blog-meta");
+            var aDate = Date.parse(aMeta ? aMeta.textContent : "") || 0;
+            var bDate = Date.parse(bMeta ? bMeta.textContent : "") || 0;
+            return value.indexOf("oldest") !== -1 ? aDate - bDate : bDate - aDate;
+          });
+          cards.forEach(function (card) { grid.appendChild(card); });
+          applyTagFilter();
+        }
+      });
+    }
+
+    // This static page contains six article previews and no additional page data.
+    var pagination = document.querySelector(".pagination");
+    if (pagination && cards.length <= 6) pagination.hidden = true;
+  }
+
+  function initQuoteProductSelection() {
+    var select = document.querySelector("#service");
+    if (!select) return;
+    var params = new URLSearchParams(window.location.search);
+    var requested = params.get("product");
+    if (!requested) return;
+    var option = Array.prototype.find.call(select.options, function (item) {
+      return item.textContent.trim().toLowerCase() === requested.trim().toLowerCase();
+    });
+    if (option) select.value = option.value || option.textContent;
+  }
+
+  function disableUnconfiguredSocialLinks() {
+    document.querySelectorAll('a[href="#"]').forEach(function (link) {
+      if (!link.querySelector(".fa-brands")) return;
+      link.removeAttribute("href");
+      link.setAttribute("aria-disabled", "true");
+      link.setAttribute("title", "Social profile link has not been configured");
+      link.style.cursor = "default";
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     initMobileNavigation();
     initWhatsAppForms();
     initGalleryFilters();
     initProductListing();
+    initHeaderSearch();
+    initHomepageProductLinks();
+    initGalleryLightbox();
+    initBlogInteractions();
+    initQuoteProductSelection();
+    disableUnconfiguredSocialLinks();
   });
 })();
