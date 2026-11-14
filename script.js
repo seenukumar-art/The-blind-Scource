@@ -135,6 +135,8 @@
     });
 
     if (select) select.addEventListener("change", applyFilters);
+    var filterButton = gallery.querySelector(".btn-filter-icon");
+    if (filterButton) filterButton.addEventListener("click", applyFilters);
     applyFilters();
   }
 
@@ -146,7 +148,6 @@
     var sort = document.querySelector(".sort-select");
     var sidebar = document.querySelector(".sidebar");
     var productTypeInputs = sidebar ? sidebar.querySelectorAll(".filter-group:nth-of-type(1) input[type=checkbox]") : [];
-    var materialInputs = sidebar ? sidebar.querySelectorAll(".filter-group:nth-of-type(2) input[type=checkbox]") : [];
     var priceSlider = sidebar ? sidebar.querySelector(".price-slider") : null;
     var priceValue = sidebar ? sidebar.querySelector("[data-price-value]") : null;
     var resultLabel = document.querySelector("[data-product-results]");
@@ -159,15 +160,6 @@
       "bamboo blinds": 1199,
       "blackout blinds": 1599
     };
-    var knownMaterials = {
-      "roller blinds": ["polyester", "pvc", "fabric"],
-      "zebra blinds": ["polyester", "fabric"],
-      "roman blinds": ["fabric"],
-      "wooden blinds": ["wood", "faux wood"],
-      "bamboo blinds": ["bamboo"],
-      "blackout blinds": ["polyester", "fabric"]
-    };
-
 
     function getCardName(card) {
       var heading = card.querySelector("h3");
@@ -176,9 +168,6 @@
 
     function applyFilters() {
       var selectedTypes = Array.prototype.filter.call(productTypeInputs, function (input) {
-        return input.checked;
-      }).map(function (input) { return input.parentElement.textContent.trim().toLowerCase(); });
-      var selectedMaterials = Array.prototype.filter.call(materialInputs, function (input) {
         return input.checked;
       }).map(function (input) { return input.parentElement.textContent.trim().toLowerCase(); });
       var maxPrice = priceSlider ? Number(priceSlider.value) : Infinity;
@@ -190,12 +179,8 @@
         var typesMatch = !selectedTypes.length || selectedTypes.some(function (type) {
           return name.indexOf(type.replace(/s$/, "")) !== -1;
         });
-        var materials = knownMaterials[name] || [];
-        var materialMatch = !selectedMaterials.length || selectedMaterials.some(function (material) {
-          return materials.indexOf(material) !== -1;
-        });
         var priceMatch = price <= maxPrice;
-        card.hidden = !(typesMatch && materialMatch && priceMatch);
+        card.hidden = !(typesMatch && priceMatch);
         if (!card.hidden) visible.push(card);
       });
 
@@ -215,7 +200,6 @@
     if (applyButton) applyButton.addEventListener("click", applyFilters);
     if (sort) sort.addEventListener("change", applyFilters);
     productTypeInputs.forEach(function (input) { input.addEventListener("change", applyFilters); });
-    materialInputs.forEach(function (input) { input.addEventListener("change", applyFilters); });
     if (priceSlider) priceSlider.addEventListener("input", function () {
       if (priceValue) priceValue.textContent = "Up to ₹" + Number(priceSlider.value).toLocaleString("en-IN");
     });
