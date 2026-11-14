@@ -206,3 +206,70 @@ a[aria-disabled="true"] { opacity: .7; }
   background: #c5a880;
   color: #121824;
 }
+
+
+/* Quote page: indicative starting-price calculator */
+.estimate-panel {
+  margin: 8px 0 24px;
+  padding: 22px;
+  border: 1px solid #e8e1d7;
+  border-radius: 10px;
+  background: #faf7f2;
+}
+.estimate-panel-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.estimate-panel-heading h3 {
+  margin: 0 0 4px;
+  color: #121824;
+  font-family: 'Playfair Display', serif;
+  font-size: 21px;
+}
+.estimate-panel-heading p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+.estimate-kicker {
+  flex: 0 0 auto;
+  padding: 5px 8px;
+  border-radius: 4px;
+  background: rgba(197, 168, 128, .18);
+  color: #725c3f;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.estimate-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.estimate-grid .form-group { margin-bottom: 12px; }
+.estimate-output {
+  display: block;
+  min-height: 48px;
+  padding: 13px 15px;
+  border-left: 3px solid #c5a880;
+  border-radius: 4px;
+  background: #fff;
+  color: #121824;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+.estimate-disclaimer {
+  margin: 10px 0 0;
+  color: #6b7280;
+  font-size: 11px;
+  line-height: 1.6;
+}
+@media (max-width: 600px) {
+  .estimate-panel { padding: 16px; }
+  .estimate-grid { grid-template-columns: 1fr; gap: 0; }
+  .estimate-panel-heading { flex-direction: column; }
+}
