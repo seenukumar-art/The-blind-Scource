@@ -257,7 +257,7 @@
           '<button type="submit">Search</button>' +
         '</div>';
       var header = document.querySelector("header");
-      if (header && header.parentNode) header.parentNode.insertBefore(panel, header.nextSibling);
+      if (header) header.appendChild(panel);
     }
 
     toggle.addEventListener("click", function () {
@@ -340,6 +340,7 @@
       control.setAttribute("role", "button");
       control.setAttribute("tabindex", "0");
       control.setAttribute("aria-label", "View larger image: " + (image.alt || "Gallery image"));
+      control.style.zIndex = "5";
 
       function openPreview() {
         preview.src = image.currentSrc || image.src;
