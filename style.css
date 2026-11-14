@@ -186,3 +186,23 @@ html,body{overflow-x:hidden}
   font-size: 13px;
 }
 a[aria-disabled="true"] { opacity: .7; }
+
+.shop-card-quote {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: #121824;
+  color: #fff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background .2s ease, color .2s ease;
+}
+.shop-card-quote:hover {
+  background: #c5a880;
+  color: #121824;
+}
