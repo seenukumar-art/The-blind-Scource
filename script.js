@@ -364,11 +364,21 @@
     var tags = document.querySelectorAll(".tags-cloud .tag");
     var tagFilter = "";
 
+    var status = document.createElement("p");
+    status.className = "blog-filter-status";
+    status.setAttribute("aria-live", "polite");
+    grid.parentNode.insertBefore(status, grid);
+
     function applyTagFilter() {
+      var visible = 0;
       cards.forEach(function (card) {
         var content = card.textContent.toLowerCase();
         card.hidden = !!tagFilter && content.indexOf(tagFilter) === -1;
+        if (!card.hidden) visible++;
       });
+      status.textContent = tagFilter
+        ? visible + " article" + (visible === 1 ? "" : "s") + " match “" + tagFilter + "”"
+        : "Showing all " + visible + " available article previews";
     }
 
     tags.forEach(function (tag) {
@@ -427,6 +437,23 @@
       link.setAttribute("aria-disabled", "true");
       link.setAttribute("title", "Social profile link has not been configured");
       link.style.cursor = "default";
+    });
+
+    document.querySelectorAll("a.read-more, a.btn-outline").forEach(function (link) {
+      var label = link.textContent.toLowerCase();
+      if (link.classList.contains("read-more") || label.indexOf("watch video") !== -1) {
+        link.removeAttribute("href");
+        link.setAttribute("aria-disabled", "true");
+        link.setAttribute("title", link.classList.contains("read-more")
+          ? "Full article page has not been published yet"
+          : "Video link has not been configured yet");
+        link.style.cursor = "not-allowed";
+      }
+    });
+
+    document.querySelectorAll(".sidebar-newsletter input, .sidebar-newsletter button, .newsletter-box input, .newsletter-box button").forEach(function (control) {
+      control.disabled = true;
+      control.setAttribute("title", "Newsletter sign-up will be available after the subscriber system is connected");
     });
   }
 
