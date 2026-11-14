@@ -273,3 +273,19 @@ a[aria-disabled="true"] { opacity: .7; }
   .estimate-grid { grid-template-columns: 1fr; gap: 0; }
   .estimate-panel-heading { flex-direction: column; }
 }
+
+
+/* Blog sidebar category filters */
+.category-list li span[role="button"] {
+  cursor: pointer;
+  transition: color .2s ease;
+}
+.category-list li span[role="button"]:hover,
+.category-list li.active span[role="button"] {
+  color: #c5a880;
+}
+.category-list li span[role="button"]:focus-visible {
+  outline: 2px solid #c5a880;
+  outline-offset: 3px;
+  border-radius: 3px;
+}
