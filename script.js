@@ -375,6 +375,7 @@
     if (!grid) return;
     var cards = Array.prototype.slice.call(grid.querySelectorAll(".blog-card"));
     var tags = document.querySelectorAll(".tags-cloud .tag");
+    var categoryItems = document.querySelectorAll(".category-list li");
     var tagFilter = "";
 
     var status = document.createElement("p");
@@ -389,6 +390,21 @@
         card.hidden = !!tagFilter && content.indexOf(tagFilter) === -1;
         if (!card.hidden) visible++;
       });
+
+      tags.forEach(function (item) {
+        var active = item.textContent.trim().toLowerCase() === tagFilter;
+        item.classList.toggle("active", active);
+        item.setAttribute("aria-pressed", String(active));
+      });
+
+      categoryItems.forEach(function (item) {
+        var label = item.querySelector("span:first-child");
+        if (!label) return;
+        var active = label.textContent.trim().toLowerCase() === tagFilter;
+        item.classList.toggle("active", active);
+        label.setAttribute("aria-pressed", String(active));
+      });
+
       status.textContent = tagFilter
         ? visible + " article" + (visible === 1 ? "" : "s") + " match “" + tagFilter + "”"
         : "Showing all " + visible + " available article previews";
@@ -405,6 +421,32 @@
           item.setAttribute("aria-pressed", String(active));
         });
         applyTagFilter();
+      });
+    });
+
+    categoryItems.forEach(function (item) {
+      var label = item.querySelector("span:first-child");
+      var count = item.querySelector("span:last-child");
+      if (!label) return;
+      var category = label.textContent.trim().toLowerCase();
+      var categoryCount = cards.filter(function (card) {
+        var meta = card.querySelector(".blog-meta span");
+        return meta && meta.textContent.trim().toLowerCase() === category;
+      }).length;
+      if (count) count.textContent = "(" + categoryCount + ")";
+      label.setAttribute("role", "button");
+      label.setAttribute("tabindex", "0");
+      label.setAttribute("aria-pressed", "false");
+      label.addEventListener("click", function () {
+        tagFilter = tagFilter === category ? "" : category;
+        applyTagFilter();
+      });
+      label.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          tagFilter = tagFilter === category ? "" : category;
+          applyTagFilter();
+        }
       });
     });
 
