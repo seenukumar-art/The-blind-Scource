@@ -10,7 +10,8 @@
       if (field.type === "radio" && !field.checked) return;
       if (!field.value || field.type === "submit" || field.type === "button") return;
       var label = field.id ? form.querySelector('label[for="' + field.id + '"]') : null;
-      lines.push((label ? label.textContent.trim() : field.name || "Details") + ": " + field.value.trim());
+      var messageLabel = field.getAttribute("data-whatsapp-label") || (label ? label.textContent.trim() : field.name || "Details");
+      lines.push(messageLabel + ": " + field.value.trim());
     });
     return lines.join("\n");
   }
@@ -439,7 +440,73 @@
     var option = Array.prototype.find.call(select.options, function (item) {
       return item.textContent.trim().toLowerCase() === requested.trim().toLowerCase();
     });
-    if (option) select.value = option.value || option.textContent;
+    if (option) {
+      select.value = option.value || option.textContent;
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+  }
+
+  function initEstimateCalculator() {
+    var form = document.querySelector('form[data-whatsapp]');
+    var product = document.querySelector("#service");
+    var width = document.querySelector("#window-width");
+    var height = document.querySelector("#window-height");
+    var windows = document.querySelector("#windows");
+    var output = document.querySelector("#estimate-output");
+    var estimateField = document.querySelector("#indicative-estimate");
+    if (!form || !product || !width || !height || !windows || !output || !estimateField) return;
+
+    // These are the "starting from" rates displayed on the product catalogue.
+    var ratesPerSqFt = {
+      "roller blinds": 1299,
+      "zebra blinds": 1599,
+      "roman blinds": 1499,
+      "wooden blinds": 2199,
+      "bamboo blinds": 1199,
+      "blackout blinds": 1599
+    };
+
+    function refreshEstimate() {
+      var selectedProduct = product.value.trim().toLowerCase();
+      var rate = ratesPerSqFt[selectedProduct];
+      var w = Number(width.value);
+      var h = Number(height.value);
+      var quantity = windows.value === "" ? 1 : Number(windows.value);
+
+      if (!selectedProduct || !width.value || !height.value) {
+        output.textContent = "Choose a product and enter window dimensions to calculate an estimate.";
+        estimateField.value = "";
+        return;
+      }
+
+      if (!Number.isFinite(w) || !Number.isFinite(h) || !Number.isFinite(quantity) ||
+          w <= 0 || h <= 0 || quantity < 1) {
+        output.textContent = "Please enter valid positive dimensions and at least one window.";
+        estimateField.value = "";
+        return;
+      }
+
+      if (!rate) {
+        output.textContent = "This product needs a custom quotation. Send your measurements and our team will assist.";
+        estimateField.value = "";
+        return;
+      }
+
+      var area = w * h * quantity;
+      var total = Math.round(area * rate);
+      var formattedTotal = "₹" + total.toLocaleString("en-IN");
+      output.textContent = "Indicative starting estimate: " + formattedTotal +
+        "  ·  " + area.toFixed(2) + " sq.ft. × ₹" + rate.toLocaleString("en-IN") + " / sq.ft.";
+      estimateField.value = formattedTotal + " (based on " + area.toFixed(2) +
+        " sq.ft. at ₹" + rate.toLocaleString("en-IN") + " / sq.ft.; indicative only)";
+    }
+
+    [product, width, height, windows].forEach(function (field) {
+      field.addEventListener("input", refreshEstimate);
+      field.addEventListener("change", refreshEstimate);
+    });
+
+    refreshEstimate();
   }
 
   function disableUnconfiguredSocialLinks() {
@@ -479,6 +546,7 @@
     initGalleryLightbox();
     initBlogInteractions();
     initQuoteProductSelection();
+    initEstimateCalculator();
     disableUnconfiguredSocialLinks();
   });
 })();
