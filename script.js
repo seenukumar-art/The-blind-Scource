@@ -31,6 +31,18 @@
       right.appendChild(button);
     }
 
+    var menuStyle = document.createElement("style");
+    menuStyle.textContent = ".menu-toggle{display:none;background:transparent;border:1px solid rgba(255,255,255,.55);color:#fff;width:42px;height:42px;border-radius:8px;align-items:center;justify-content:center;font-size:17px;cursor:pointer}@media(max-width:1100px){.menu-toggle{display:inline-flex}header nav{display:none;position:absolute;top:100%;left:0;right:0;background:#121824;padding:20px 5%;z-index:120}header nav.open{display:block!important}header nav ul{display:flex;flex-direction:column;gap:16px}.nav-right .btn-gold{display:none}}";
+    document.head.appendChild(menuStyle);
+
+    var mobileQuote = nav.querySelector(".mobile-quote-link");
+    if (!mobileQuote) {
+      mobileQuote = document.createElement("li");
+      mobileQuote.className = "mobile-quote-link";
+      mobileQuote.innerHTML = '<a href="./quote.html" style="color:#c5a880;font-weight:600">Get a Free Quote</a>';
+      nav.querySelector("ul").appendChild(mobileQuote);
+    }
+
     button.addEventListener("click", function () {
       var isOpen = nav.classList.toggle("open");
       button.setAttribute("aria-expanded", String(isOpen));
@@ -156,34 +168,6 @@
       "blackout blinds": ["polyester", "fabric"]
     };
 
-    var colorDots = sidebar ? Array.prototype.slice.call(sidebar.querySelectorAll(".color-dot")) : [];
-    var activeColor = null;
-    colorDots.forEach(function (dot, index) {
-      dot.setAttribute("role", "button");
-      dot.setAttribute("tabindex", "0");
-      dot.setAttribute("aria-label", "Filter by colour " + (index + 1));
-      dot.setAttribute("aria-pressed", "false");
-      function toggleColor() {
-        var wasActive = dot.classList.contains("selected");
-        colorDots.forEach(function (other) {
-          other.classList.remove("selected");
-          other.setAttribute("aria-pressed", "false");
-        });
-        activeColor = wasActive ? null : index;
-        if (activeColor !== null) {
-          dot.classList.add("selected");
-          dot.setAttribute("aria-pressed", "true");
-        }
-        applyFilters();
-      }
-      dot.addEventListener("click", toggleColor);
-      dot.addEventListener("keydown", function (event) {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          toggleColor();
-        }
-      });
-    });
 
     function getCardName(card) {
       var heading = card.querySelector("h3");
