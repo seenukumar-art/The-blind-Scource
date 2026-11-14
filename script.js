@@ -166,6 +166,18 @@
       return heading ? heading.textContent.trim().toLowerCase() : "";
     }
 
+    // Each currently displayed category card routes to the existing quote form.
+    cards.forEach(function (card) {
+      var body = card.querySelector(".shop-card-body");
+      var heading = card.querySelector("h3");
+      if (!body || !heading || body.querySelector(".shop-card-quote")) return;
+      var link = document.createElement("a");
+      link.className = "shop-card-quote";
+      link.href = "./quote.html?product=" + encodeURIComponent(heading.textContent.trim());
+      link.textContent = "Request a quote";
+      body.appendChild(link);
+    });
+
     function applyFilters() {
       var selectedTypes = Array.prototype.filter.call(productTypeInputs, function (input) {
         return input.checked;
