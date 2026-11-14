@@ -179,3 +179,10 @@ html,body{overflow-x:hidden}
   .site-search-panel { right: 3%; width: 94vw; }
   .site-search-row button { padding-inline: 12px; }
 }
+
+.blog-filter-status {
+  margin: 0 0 14px;
+  color: #6b7280;
+  font-size: 13px;
+}
+a[aria-disabled="true"] { opacity: .7; }
