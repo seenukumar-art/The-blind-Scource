@@ -44,3 +44,46 @@ html,body{overflow-x:hidden}
  .consultation-banner{padding:28px}
  .cb-right{flex-wrap:wrap}
 }
+
+
+/* Functional product-list view and mobile navigation support */
+.products-grid-shop.list-view {
+  grid-template-columns: 1fr;
+}
+.products-grid-shop.list-view .shop-card {
+  display: grid;
+  grid-template-columns: minmax(150px, 240px) 1fr;
+  align-items: stretch;
+}
+.products-grid-shop.list-view .shop-card-img {
+  height: 100%;
+  min-height: 170px;
+}
+.products-grid-shop.list-view .shop-card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.shop-card[hidden], .blog-card[hidden] {
+  display: none !important;
+}
+@media (max-width: 760px) {
+  .products-grid-shop.list-view .shop-card {
+    grid-template-columns: 120px minmax(0, 1fr);
+  }
+  .products-grid-shop.list-view .shop-card-img {
+    min-height: 140px;
+  }
+  .shop-container {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .shop-header-bar {
+    align-items: flex-start !important;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .shop-controls {
+    flex-wrap: wrap;
+  }
+}
